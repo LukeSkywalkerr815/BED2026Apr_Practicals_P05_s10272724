@@ -1,0 +1,15 @@
+2.
+
+
+
+I learned that REST APIs use a stateless architecture, meaning the server doesn't 'remember' previous requests and every request must contain all the info needed.
+
+I understood that HTTP methods provide a simple way to interact with data. For example, using POST /foods clearly signals creating the data, while GET /foods is for retrieving the data.
+
+One challenge was that whenever I update my code, I have to restart the whole request sequence, hence making the process tedious.
+
+
+3.
+POST vs. PUT: Use POST when you want the server to create a new resource and decide its ID. Use PUT when you are targeting a specific, existing ID to replace its data.
+
+You return a 404 Not Found when you try to update something but its not there
