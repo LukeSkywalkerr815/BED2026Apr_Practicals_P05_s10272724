@@ -1,0 +1,11 @@
+Look at the code in the final app.js file (where all logic is in routes and no validation). How easy or difficult is it to read and understand what's happening in each route handler compared to when the database logic was in separate functions?
+
+While putting all logic inside the route handlers makes it easy to see the "flow" of a single request from start to finish, it actually makes the code more difficult to read as the project grows. The route handler becomes "crowded" because it has to manage web requests, database connections, SQL queries, and error handling all in one block. Compared to using separate functions, this approach is messy and makes it harder to quickly identify which part of the code is responsible for the API logic versus the database interaction.
+
+If you found a bug in how books are created in the database, which version of app.js would make it easiest to isolate and fix that bug?
+
+The version of app.js where database logic is kept in separate functions (or separate files) would be much easier for isolating and fixing bugs. If there is a bug in how a book is created, I would know exactly which specific function to look at without having to dig through route-handling code. Furthermore, if the logic is in a separate function, I can test the database code independently of the web server, which makes troubleshooting much faster.
+
+Did you face any challenges while implementing this practical?
+
+The most significant challenge I faced was establishing the connection between Node.js and the SQL Server database. I encountered several connectivity and authentication errors, which required me to systematically backtrack and verify my configurations. I had to double-check the TCP/IP settings in the SQL Server Configuration Manager, ensure the server was in Mixed Mode, and confirm that my dbConfig.js credentials were exact before I was finally able to execute the connection successfully.
