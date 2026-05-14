@@ -1,0 +1,41 @@
+(Task 1: Reflection on Refactoring)
+
+Reflect on the process of refactoring the API code into the MVC structure by answering the following questions:
+
+1. What were the main changes you made to refactor the code into MVC architecture? Describe how you moved code between files and folders.
+
+The main change was moving from a "monolithic" structure (everything in app.js) to a "modular" one. I moved database queries into the Model (bookModel.js), the request/response logic (like res.json and res.status) into the Controller (bookController.js), and the logic for checking data integrity into Middlewares. app.js was reduced to a simple entry point that only handles routing and server startup.
+
+2. What challenges did you face during the refactoring process?
+
+One major challenge was ensuring that the data flowed correctly between the layers. I had to ensure the Controller was correctly awaiting the Model functions and that errors were properly caught and passed up the chain. Another challenge was managing imports and exports to make sure all files could "see" each other.
+
+3. How does the MVC structure change the way you think about adding new features or modifying existing ones compared to the previous non-MVC structure?
+
+In MVC, adding a feature feels more like following a recipe. Instead of just writing code anywhere, I now ask: "Does this change the data structure (Model)? Is this a new user action (Controller)? Or is this a security check (Middleware)?" It makes the development process more predictable.
+
+4. In what specific ways do you think the MVC version is more organized or easier to understand and maintain than the previous version where all logic was in app.js?
+
+The MVC version is more organized because each file has a single responsibility. If a database query breaks, I know exactly which file in the models folder to check. In the old version, I would have to scroll through a massive app.js file, which becomes difficult as the project grows.
+
+5. Explain how separating concerns (putting database logic in the Model and request handling in the Controller) makes the code better from a development perspective.
+
+Separating concerns makes code reusable and testable. For example, the logic in the Model could theoretically be used for a web app AND a mobile app without changing the code. From a development perspective, it allows multiple developers to work on different parts of the app (e.g., one on database logic, one on API endpoints) without interfering with each other.
+
+(Task 2: Reflecting on Robustness & Security)
+
+Reflect on the impact of validation, error handling, and parameterized queries by answering the following questions:
+
+1. How does implementing input validation middleware make the API more reliable and user-friendly? Provide an example of invalid input that your validation would now handle.
+
+Validation makes the API reliable by ensuring only "clean" data enters the database. It is user-friendly because it provides specific feedback (e.g., "Title must be at least 3 characters") instead of just crashing the server.
+
+Example: If a user tries to POST a book with an empty author field, the Joi middleware intercepts it and returns a 400 Bad Request with a helpful message.
+
+2. Explain in your own words how parameterized queries prevent SQL injection attacks. Why is this approach fundamentally more secure than building SQL query strings by concatenating variable data?
+
+Concatenation allows a user to "trick" the database by including SQL commands in their input (e.g., typing '; DROP TABLE Books;-- into a name field). Parameterized queries prevent this by treating user input as data only, never as executable code. The database engine pre-compiles the SQL command and then safely inserts the values into the placeholders.
+
+3. Consider a potential security risk for an API (other than SQL injection, e.g., brute-force attacks, exposing sensitive data in responses). How might robust error handling (like not showing detailed error messages to the client) help mitigate such a risk?
+
+Detailed error messages (like stack traces or database table names) can give hackers a "map" of your system. Robust error handling mitigates this by logging the real error on the server for the developer to see, while sending a generic, safe message like "Internal Server Error" to the client. This prevents sensitive information about the database structure from being exposed.
