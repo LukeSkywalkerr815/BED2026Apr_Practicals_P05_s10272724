@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const path = require("path");
 dotenv.config();
 
 const studentController = require("./controllers/studentController");
@@ -9,6 +10,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// --- Task 1: Serve static files from the 'public' directory ---
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 app.get("/students", studentController.getAllStudents);

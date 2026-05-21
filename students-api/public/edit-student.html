@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Student Record</title>
+    <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+    <h1>Modify Student Record</h1>
+    <p><a href="students.html">⬅️ Cancel and Return</a></p>
+
+    <div id="loadingMessage">Querying database records...</div>
+    <form id="editStudentForm" style="display: none;">
+        <input type="hidden" id="studentId" />
+        <div>
+            <label for="editName">Full Name:</label>
+            <input type="text" id="editName" required />
+        </div>
+        <div>
+            <label for="editAddress">Address:</label>
+            <input type="text" id="editAddress" required />
+        </div>
+        <button type="submit" class="edit-btn">Save Changes</button>
+    </form>
+
+    <div id="message"></div>
+    <script src="edit-student-script.js"></script>
+</body>
+
+</html>
