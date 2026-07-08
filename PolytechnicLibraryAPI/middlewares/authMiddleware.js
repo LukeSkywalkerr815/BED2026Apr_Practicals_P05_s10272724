@@ -14,10 +14,10 @@ function verifyJWT(req, res, next) {
 
     const authorizedRoles = {
       "GET /books": ["member", "librarian"],
+      "POST /books": ["librarian"],
       "PUT /books/[0-9]+/availability": ["librarian"], 
     };
 
-    // Remove query parameters if any to strictly match endpoint
     const cleanUrl = req.url.split('?')[0];
     const requestedEndpoint = `${req.method} ${cleanUrl}`; 
     const userRole = decoded.role;
