@@ -26,6 +26,35 @@ This is the backend API for the Polytechnic Library system, designed to manage b
    JWT_SECRET=your_jwt_secret_key
    PORT=3000
 
+## Database Setup
+
+Execute the following SQL script in Microsoft SQL Server Management Studio (SSMS) to initialize your database, tables, and seed data:
+   ```sql
+   CREATE DATABASE PolytechnicLibrary;
+    GO
+    USE PolytechnicLibrary;
+    GO
+
+    CREATE TABLE Users (
+        user_id INT IDENTITY(1,1) PRIMARY KEY,
+        username VARCHAR(255) UNIQUE NOT NULL,
+        passwordHash VARCHAR(255) NOT NULL,
+        role VARCHAR(20) CHECK (role IN ('member', 'librarian')) NOT NULL
+    );
+
+    CREATE TABLE Books (
+        book_id INT IDENTITY(1,1) PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        author VARCHAR(255) NOT NULL,
+        availability CHAR(1) CHECK (availability IN ('Y', 'N')) NOT NULL
+    );
+
+    INSERT INTO Books (title, author, availability) VALUES 
+    ('The Great Gatsby', 'Harper Lee', 'Y'),
+    ('1984', 'George Orwell', 'N'),
+    ('To Kill a Mockingbird', 'F. Scott Fitzgerald', 'Y');
+ ```
+
 ## Testing with Postman
 
 To successfully test the protected endpoints, follow this sequence:
