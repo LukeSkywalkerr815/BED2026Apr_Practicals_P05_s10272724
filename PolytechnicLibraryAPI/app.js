@@ -1,4 +1,6 @@
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 const { registerUser, login } = require("./controllers/authController");
 const { getBooks, updateAvailability } = require("./controllers/bookController");
 const verifyJWT = require("./middlewares/authMiddleware");
@@ -6,6 +8,8 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+// Serve the Swagger UI at a specific route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Public Routes (Authentication)
 app.post("/register", registerUser);
